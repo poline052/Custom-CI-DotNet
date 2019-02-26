@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>CI Live Events Viwer</title>
+
+
+    <script src="jquery-1.6.4.min.js"></script>
+    <script src="jquery.signalR-2.2.2.min.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            var connection = $.connection("/echo");
+
+            connection.qs = {
+                'RepositoryId': 'Ecap-Test',
+                'BranchId': 'test'
+            };
+
+            connection.start().done(function () {
+                document.writeln('Connected.\n');
+            });
+
+            connection.received(function (data) {
+
+                var messagePara = document.createElement('p');
+
+                messagePara.innerText = data.MessageBody;
+
+                var paragraph = '<p>' + data.BranchId + 
+
+                document.body.appendChild(messagePara);
+
+            });
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>
